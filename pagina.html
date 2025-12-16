@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSSC - Sistema de Controle Biométrico e Sincronização</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #0f172a;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            color: #0f172a;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .requirement-box {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2563eb;
+        }
+
+        .requirement-box h4 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .requirement-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .requirement-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .requirement-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #0f172a;
+            color: #10b981;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            position: relative;
+            border: 1px solid #1e293b;
+        }
+
+        .code-block code {
+            display: block;
+            white-space: pre;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #fde68a;
+        }
+
+        .info {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #bfdbfe;
+        }
+
+        .success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+        }
+
+        .download-box {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .download-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .download-box p {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+
+        .contact-info {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .contact-info h4 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .contact-info a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #1e40af;
+        }
+
+        .feature-card:hover {
+            transform: scale(1.03);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        footer a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+            border: 1px solid #1e40af;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .requirements-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 BSSC</h1>
+            <p class="subtitle">Sistema de Controle Biométrico e Sincronização</p>
+        </header>
+
+        <div class="card">
+            <h2><span class="icon">📋</span> Sobre o Sistema</h2>
+            <p>O BSSC é um sistema completo de gestão de ponto biométrico com sincronização em tempo real. Desenvolvido para Ubuntu/Debian, oferece interface gráfica intuitiva e serviço Python em background para sincronização automática com dispositivos ZKTeco.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Gestão de Usuários</h3>
+                    <p>Cadastro e sincronização automática</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🕒</div>
+                    <h3>Ponto Biométrico</h3>
+                    <p>Sincronização em tempo real</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Relatórios</h3>
+                    <p>Dashboards e exportação</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Segurança</h3>
+                    <p>Criptografia de dados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">📥</span> Como Obter o BSSC</h2>
+            
+            <div class="download-box">
+                <h3>🎯 Obtenha seu Pacote de Instalação</h3>
+                <p>O pacote .deb do BSSC é fornecido exclusivamente pela equipe de desenvolvimento.</p>
+                <p><strong>Entre em contato conosco para solicitar o arquivo de instalação!</strong></p>
+            </div>
+
+            <div class="contact-info">
+                <h4>📞 Contatos da Equipe BSSC</h4>
+                <p><strong>📧 Email Geral:</strong> <a href="mailto:geral@bssc.co.ao">geral@bssc.co.ao</a></p>
+                <p><strong>🔧 Suporte Técnico:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
+                <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
+                <p><strong>🌐 Website:</strong> <a href="https://www.bssc.co.ao">www.bssc.co.ao</a></p>
+            </div>
+
+            <div class="info">
+                <strong>ℹ️ Nota Importante:</strong> Ao entrar em contato com a equipe, informe:
+                <ul style="margin-top: 0.5rem; padding-left: 2rem;">
+                    <li>Nome da empresa/organização</li>
+                    <li>Número de dispositivos a serem gerenciados</li>
+                    <li>Versão do sistema operacional (Ubuntu/Debian)</li>
+                    <li>Finalidade de uso do sistema</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">💻</span> Requisitos do Sistema</h2>
+            
+            <div class="requirements-grid">
+                <div class="requirement-box">
+                    <h4>🐧 Sistema Operacional</h4>
+                    <ul class="requirement-list">
+                        <li>Ubuntu 22.04 LTS ou superior</li>
+                        <li>Ubuntu 24.04 LTS (recomendado)</li>
+                        <li>Debian 11 (Bullseye) ou superior</li>
+                        <li>Debian 12 (Bookworm)</li>
+                        <li>Linux Mint 21+</li>
+                        <li>Pop!_OS 22.04+</li>
+                        <li>Outras distros baseadas em Debian/Ubuntu</li>
+                    </ul>
+                </div>
+
+                <div class="requirement-box">
+                    <h4>🐍 Python</h4>
+                    <ul class="requirement-list">
+                        <li>Python 3.10 ou superior</li>
+                        <li>python3-pip</li>
+                        <li>python3-venv (opcional)</li>
+                    </ul>
+                </div>
+
+                <div class="requirement-box">
+                    <h4>🌐 Node.js</h4>
+                    <ul class="requirement-list">
+                        <li>Node.js 18.x LTS (recomendado)</li>
+                        <li>Node.js 20.x ou 24.x</li>
+                        <li>npm 9.x ou superior</li>
+                    </ul>
+                </div>
+
+                <div class="requirement-box">
+                    <h4>💾 Hardware Mínimo</h4>
+                    <ul class="requirement-list">
+                        <li>CPU: 2 cores / 2 GHz</li>
+                        <li>RAM: 4 GB</li>
+                        <li>Disco: 2 GB livres</li>
+                        <li>Rede: Ethernet ou Wi-Fi</li>
+                    </ul>
+                </div>
+
+                <div class="requirement-box">
+                    <h4>💾 Hardware Recomendado</h4>
+                    <ul class="requirement-list">
+                        <li>CPU: 4+ cores / 2.5+ GHz</li>
+                        <li>RAM: 8 GB ou mais</li>
+                        <li>Disco: 10 GB livres (SSD)</li>
+                        <li>Rede: Ethernet gigabit</li>
+                    </ul>
+                </div>
+
+                <div class="requirement-box">
+                    <h4>📦 Dependências</h4>
+                    <ul class="requirement-list">
+                        <li>systemd (gerenciamento de serviços)</li>
+                        <li>apt (gerenciador de pacotes)</li>
+                        <li>Desktop environment (GNOME, KDE, XFCE, etc.)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">🚀</span> Instalação</h2>
+            
+            <div class="warning">
+                <strong>⚠️ Pré-requisito:</strong> Antes de prosseguir, certifique-se de ter recebido o arquivo <strong>bssc-app_X.Y.Z_amd64.deb</strong> da equipe de desenvolvimento BSSC.
+            </div>
+
+            <h3>1. Pré-requisitos</h3>
+            <p>Primeiro, certifique-se de que o sistema está atualizado:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code>sudo apt update
+sudo apt upgrade -y</code>
+            </div>
+
+            <h3>2. Instalar Python e dependências básicas</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code>sudo apt install -y \
+  python3 \
+  python3-pip \
+  python3-pycryptodome \
+  python3-flask \
+  python3-requests \
+  python3-bcrypt \
+  python3-dotenv</code>
+            </div>
+
+            <div class="info">
+                <strong>ℹ️ Nota:</strong> O instalador .deb instalará automaticamente as dependências Python adicionais que não estão disponíveis via apt.
+            </div>
+
+            <h3>3. Instalar o BSSC</h3>
+            <p>Após receber o arquivo .deb da equipe BSSC, navegue até o diretório onde o arquivo foi salvo e execute:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Navegar até o diretório do arquivo (exemplo)
+cd ~/Downloads
+
+# Instalar o pacote fornecido pela equipe BSSC
+sudo dpkg -i bssc-app_X.Y.Z_amd64.deb
+
+# Se houver erros de dependências, corrija com:
+sudo apt --fix-broken install -y</code>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> Após a instalação, faça <strong>logout e login novamente</strong> para aplicar as permissões de grupo necessárias.
+            </div>
+
+            <h3>4. Verificar instalação</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Verificar se o comando está disponível
+which bssc
+
+# Verificar serviço Python
+systemctl status bssc-python
+
+# Ver logs do serviço
+journalctl -u bssc-python -f</code>
+            </div>
+
+            <div class="success">
+                <strong>✅ Pronto!</strong> O BSSC está instalado. Inicie a aplicação com o comando <code>bssc</code> ou procure por "BSSC" no menu de aplicações.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">⚙️</span> Configuração Inicial</h2>
+            
+            <h3>1. Primeira execução</h3>
+            <p>Execute a aplicação pela primeira vez:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code>bssc</code>
+            </div>
+
+            <h3>2. Configurar conexão</h3>
+            <ol style="padding-left: 2rem; margin: 1rem 0;">
+                <li>Na interface gráfica, acesse <strong>Configurações</strong></li>
+                <li>Configure o endereço IP do dispositivo ZKTeco</li>
+                <li>Configure as credenciais de acesso</li>
+                <li>Teste a conexão</li>
+            </ol>
+
+            <h3>3. Iniciar serviço de sincronização</h3>
+            <p>Após configurar a aplicação, inicie o serviço Python:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Iniciar serviço
+sudo systemctl start bssc-python
+
+# Habilitar para iniciar no boot
+sudo systemctl enable bssc-python
+
+# Verificar status
+systemctl status bssc-python</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">🔧</span> Comandos Úteis</h2>
+            
+            <h3>Aplicação GUI</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Iniciar aplicação
+bssc
+
+# Ou usar comando alternativo
+bssc-app</code>
+            </div>
+
+            <h3>Gerenciamento do Serviço Python</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Status do serviço
+systemctl status bssc-python
+
+# Iniciar serviço
+sudo systemctl start bssc-python
+
+# Parar serviço
+sudo systemctl stop bssc-python
+
+# Reiniciar serviço
+sudo systemctl restart bssc-python
+
+# Habilitar início automático
+sudo systemctl enable bssc-python
+
+# Desabilitar início automático
+sudo systemctl disable bssc-python
+
+# Ver logs em tempo real
+journalctl -u bssc-python -f
+
+# Ver últimas 50 linhas de log
+journalctl -u bssc-python -n 50</code>
+            </div>
+
+            <h3>Manutenção</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Ver informações do pacote instalado
+dpkg -l | grep bssc-app
+
+# Ver arquivos instalados
+dpkg -L bssc-app
+
+# Remover aplicação (mantém configurações)
+sudo apt remove bssc-app
+
+# Remover completamente (incluindo configurações)
+sudo apt purge bssc-app
+
+# Limpar arquivos de configuração órfãos
+sudo apt autoremove</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">🛠</span> Solução de Problemas</h2>
+            
+            <h3>Problema: Comando 'bssc' não encontrado</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Atualizar cache do shell
+hash -r
+
+# Verificar se o link existe
+ls -la /usr/local/bin/bssc
+
+# Recriar link manualmente se necessário
+sudo ln -sf /opt/BSSC/bssc /usr/local/bin/bssc</code>
+            </div>
+
+            <h3>Problema: Serviço Python não inicia</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Ver logs detalhados
+journalctl -u bssc-python -n 100 --no-pager
+
+# Verificar dependências Python
+python3 -c "from Crypto.Cipher import AES; print('OK')"
+
+# Reinstalar dependências Python
+sudo apt install --reinstall python3-pycryptodome
+
+# Verificar permissões
+ls -la /var/lib/bssc/
+ls -la /var/log/bssc/</code>
+            </div>
+
+            <h3>Problema: Erro de permissão ao escrever em /var/lib/bssc/</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Verificar se está no grupo bssc
+groups
+
+# Se não estiver, adicionar ao grupo
+sudo usermod -a -G bssc $USER
+
+# IMPORTANTE: Fazer logout e login novamente
+
+# Verificar permissões dos diretórios
+ls -la /var/lib/bssc/
+
+# Corrigir permissões se necessário
+sudo chown -R bssc:bssc /var/lib/bssc
+sudo chmod -R 775 /var/lib/bssc</code>
+            </div>
+
+            <h3>Problema: Aplicação não conecta ao dispositivo ZKTeco</h3>
+            <ul class="requirement-list" style="margin-left: 2rem;">
+                <li>Verifique se o dispositivo está na mesma rede</li>
+                <li>Teste ping: <code>ping IP_DO_DISPOSITIVO</code></li>
+                <li>Verifique firewall: <code>sudo ufw status</code></li>
+                <li>Confirme IP e porta nas configurações</li>
+                <li>Verifique logs do serviço Python</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">🔄</span> Atualização</h2>
+            
+            <p>Para atualizar para uma nova versão, entre em contato com a equipe BSSC para obter o pacote mais recente:</p>
+            
+            <div class="contact-info">
+                <h4>📞 Solicite a Atualização</h4>
+                <p><strong>📧 Email:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">geral@bssc.co.ao</a></p>
+                <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
+            </div>
+
+            <p>Após receber o novo pacote .deb:</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <code># Instalar atualização (preserva configurações)
+sudo dpkg -i bssc-app_X.Y.Z_amd64.deb
+
+# Reiniciar serviço
+sudo systemctl restart bssc-python</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">❓</span> Suporte</h2>
+            
+            <p>Precisa de ajuda? Entre em contato com a equipe BSSC:</p>
+            
+            <div class="contact-info" style="margin-top: 1.5rem;">
+                <h4>📞 Canais de Suporte</h4>
+                <p><strong>📧 Email Geral:</strong> <a href="mailto:geral@bssc.co.ao">geral@bssc.co.ao</a></p>
+                <p><strong>🔧 Suporte Técnico:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
+                <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
+                <p><strong>🌐 Website:</strong> <a href="https://www.bssc.co.ao">www.bssc.co.ao</a></p>
+                <p><strong>⏰ Horário de Atendimento:</strong> Segunda a Sexta, 8h00 às 17h00 | Sábados, 8h00 às 12h00</p>
+            </div>
+
+            <div style="margin-top: 2rem; text-align: center;">
+                <a href="mailto:geral@bssc.co.ao" class="btn-primary">📧 Solicitar Instalador</a>
+                <a href="https://wa.me/244948474874" class="btn-primary">💬 WhatsApp</a>
+                <a href="mailto:benvindo.carvalho@bssc.co.ao" class="btn-primary">🔧 Suporte Técnico</a>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>BSSC v1.0.0</strong></p>
+            <p>Sistema de Controle Biométrico e Sincronização</p>
+            <p style="margin-top: 1rem;">
+                <a href="mailto:geral@bssc.co.ao">Suporte</a> • 
+                <a href="mailto:benvindo.carvalho@bssc.co.ao">Suporte Técnico</a> • 
+                <a href="https://www.bssc.co.ao">Website</a>
+            </p>
+            <p style="margin-top: 1rem; color: #666;">
+                © 2025 BSSC Development Team. Todos os direitos reservados.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copiado!';
+                button.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#2563eb';
+                }, 2000);
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
