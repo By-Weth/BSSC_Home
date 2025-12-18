@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -293,7 +294,7 @@
             h1 {
                 font-size: 2rem;
             }
-            
+
             .requirements-grid,
             .features-grid {
                 grid-template-columns: 1fr;
@@ -301,6 +302,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -310,8 +312,10 @@
 
         <div class="card">
             <h2><span class="icon">📋</span> Sobre o Sistema</h2>
-            <p>O BSSC é um sistema completo de gestão de ponto biométrico com sincronização em tempo real. Desenvolvido para Ubuntu/Debian, oferece interface gráfica intuitiva e serviço Python em background para sincronização automática com dispositivos ZKTeco.</p>
-            
+            <p>O BSSC é um sistema completo de gestão de ponto biométrico com sincronização em tempo real. Desenvolvido
+                para Ubuntu/Debian, oferece interface gráfica intuitiva e serviço Python em background para
+                sincronização automática com dispositivos ZKTeco.</p>
+
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">👥</div>
@@ -338,7 +342,7 @@
 
         <div class="card">
             <h2><span class="icon">📥</span> Como Obter o BSSC</h2>
-            
+
             <div class="download-box">
                 <h3>🎯 Obtenha seu Pacote de Instalação</h3>
                 <p>O pacote .deb do BSSC é fornecido exclusivamente pela equipe de desenvolvimento.</p>
@@ -348,7 +352,8 @@
             <div class="contact-info">
                 <h4>📞 Contatos da Equipe BSSC</h4>
                 <p><strong>📧 Email Geral:</strong> <a href="mailto:geral@bssc.co.ao">geral@bssc.co.ao</a></p>
-                <p><strong>🔧 Suporte Técnico:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
+                <p><strong>🔧 Suporte Técnico:</strong> <a
+                        href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
                 <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
                 <p><strong>🌐 Website:</strong> <a href="https://www.bssc.co.ao">www.bssc.co.ao</a></p>
             </div>
@@ -366,7 +371,7 @@
 
         <div class="card">
             <h2><span class="icon">💻</span> Requisitos do Sistema</h2>
-            
+
             <div class="requirements-grid">
                 <div class="requirement-box">
                     <h4>🐧 Sistema Operacional</h4>
@@ -432,9 +437,10 @@
 
         <div class="card">
             <h2><span class="icon">🚀</span> Instalação</h2>
-            
+
             <div class="warning">
-                <strong>⚠️ Pré-requisito:</strong> Antes de prosseguir, certifique-se de ter recebido o arquivo <strong>bssc-app_X.Y.Z_amd64.deb</strong> da equipe de desenvolvimento BSSC.
+                <strong>⚠️ Pré-requisito:</strong> Antes de prosseguir, certifique-se de ter recebido o arquivo
+                <strong>bssc-app_X.Y.Z_amd64.deb</strong> da equipe de desenvolvimento BSSC.
             </div>
 
             <h3>1. Pré-requisitos</h3>
@@ -459,11 +465,14 @@ sudo apt upgrade -y</code>
             </div>
 
             <div class="info">
-                <strong>ℹ️ Nota:</strong> O instalador .deb instalará automaticamente as dependências Python adicionais que não estão disponíveis via apt.
+                <strong>ℹ️ Nota:</strong> O instalador .deb instalará automaticamente as dependências Python adicionais
+                que não estão disponíveis via apt.
+
             </div>
 
             <h3>3. Instalar o BSSC</h3>
-            <p>Após receber o arquivo .deb da equipe BSSC, navegue até o diretório onde o arquivo foi salvo e execute:</p>
+            <p>Após receber o arquivo .deb da equipe BSSC, navegue até o diretório onde o arquivo foi salvo e execute:
+            </p>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                 <code># Navegar até o diretório do arquivo (exemplo)
@@ -477,7 +486,26 @@ sudo apt --fix-broken install -y</code>
             </div>
 
             <div class="warning">
-                <strong>⚠️ Importante:</strong> Após a instalação, faça <strong>logout e login novamente</strong> para aplicar as permissões de grupo necessárias.
+                <strong>
+                    <p>Em Caso do erro abaixo listado 👇:</p>
+                </strong>
+
+                <strong>⚠️ [6451:1217/134900.302219:FATAL:setuid_sandbox_host.cc(158)] The SUID sandbox helper binary
+                    was found, but is not configured correctly. Rather than run without sandboxing I'm aborting now. You
+                    need to make sure that /opt/BSSC/chrome-sandbox is owned by root and has mode 4755. Trace/breakpoint
+                    trap (core dumped)</strong>
+
+                <strong>
+                    <p>Execute Estes comandos:</p>
+                </strong>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    <code>
+sudo chown root:root /opt/BSSC/chrome-sandbox
+sudo chmod 4755 /opt/BSSC/chrome-sandbox
+                    </code>
+
+                </div>
             </div>
 
             <h3>4. Verificar instalação</h3>
@@ -494,13 +522,14 @@ journalctl -u bssc-python -f</code>
             </div>
 
             <div class="success">
-                <strong>✅ Pronto!</strong> O BSSC está instalado. Inicie a aplicação com o comando <code>bssc</code> ou procure por "BSSC" no menu de aplicações.
+                <strong>✅ Pronto!</strong> O BSSC está instalado. Inicie a aplicação com o comando <code>bssc</code> ou
+                procure por "BSSC" no menu de aplicações.
             </div>
         </div>
 
         <div class="card">
             <h2><span class="icon">⚙️</span> Configuração Inicial</h2>
-            
+
             <h3>1. Primeira execução</h3>
             <p>Execute a aplicação pela primeira vez:</p>
             <div class="code-block">
@@ -533,7 +562,7 @@ systemctl status bssc-python</code>
 
         <div class="card">
             <h2><span class="icon">🔧</span> Comandos Úteis</h2>
-            
+
             <h3>Aplicação GUI</h3>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
@@ -594,7 +623,7 @@ sudo apt autoremove</code>
 
         <div class="card">
             <h2><span class="icon">🛠</span> Solução de Problemas</h2>
-            
+
             <h3>Problema: Comando 'bssc' não encontrado</h3>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
@@ -656,9 +685,10 @@ sudo chmod -R 775 /var/lib/bssc</code>
 
         <div class="card">
             <h2><span class="icon">🔄</span> Atualização</h2>
-            
-            <p>Para atualizar para uma nova versão, entre em contato com a equipe BSSC para obter o pacote mais recente:</p>
-            
+
+            <p>Para atualizar para uma nova versão, entre em contato com a equipe BSSC para obter o pacote mais recente:
+            </p>
+
             <div class="contact-info">
                 <h4>📞 Solicite a Atualização</h4>
                 <p><strong>📧 Email:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">geral@bssc.co.ao</a></p>
@@ -678,16 +708,18 @@ sudo systemctl restart bssc-python</code>
 
         <div class="card">
             <h2><span class="icon">❓</span> Suporte</h2>
-            
+
             <p>Precisa de ajuda? Entre em contato com a equipe BSSC:</p>
-            
+
             <div class="contact-info" style="margin-top: 1.5rem;">
                 <h4>📞 Canais de Suporte</h4>
                 <p><strong>📧 Email Geral:</strong> <a href="mailto:geral@bssc.co.ao">geral@bssc.co.ao</a></p>
-                <p><strong>🔧 Suporte Técnico:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
+                <p><strong>🔧 Suporte Técnico:</strong> <a
+                        href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
                 <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
                 <p><strong>🌐 Website:</strong> <a href="https://www.bssc.co.ao">www.bssc.co.ao</a></p>
-                <p><strong>⏰ Horário de Atendimento:</strong> Segunda a Sexta, 8h00 às 17h00 | Sábados, 8h00 às 12h00</p>
+                <p><strong>⏰ Horário de Atendimento:</strong> Segunda a Sexta, 8h00 às 17h00 | Sábados, 8h00 às 12h00
+                </p>
             </div>
 
             <div style="margin-top: 2rem; text-align: center;">
@@ -701,8 +733,8 @@ sudo systemctl restart bssc-python</code>
             <p><strong>BSSC v1.0.0</strong></p>
             <p>Sistema de Controle Biométrico e Sincronização</p>
             <p style="margin-top: 1rem;">
-                <a href="mailto:geral@bssc.co.ao">Suporte</a> • 
-                <a href="mailto:benvindo.carvalho@bssc.co.ao">Suporte Técnico</a> • 
+                <a href="mailto:geral@bssc.co.ao">Suporte</a> •
+                <a href="mailto:benvindo.carvalho@bssc.co.ao">Suporte Técnico</a> •
                 <a href="https://www.bssc.co.ao">Website</a>
             </p>
             <p style="margin-top: 1rem; color: #666;">
@@ -715,12 +747,12 @@ sudo systemctl restart bssc-python</code>
         function copyCode(button) {
             const codeBlock = button.nextElementSibling;
             const code = codeBlock.textContent;
-            
+
             navigator.clipboard.writeText(code).then(() => {
                 const originalText = button.textContent;
                 button.textContent = '✓ Copiado!';
                 button.style.background = '#10b981';
-                
+
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.background = '#2563eb';
@@ -739,4 +771,5 @@ sudo systemctl restart bssc-python</code>
         });
     </script>
 </body>
+
 </html>
