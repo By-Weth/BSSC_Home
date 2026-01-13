@@ -3,1209 +3,1350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSSC - Sistema de Controle Biométrico e Sincronização</title>
+    <title>BSSC Installation Guide - Biometric Synchronization Control System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #E95420;
+            --primary-dark: #C73E17;
+            --primary-light: #FFF5F2;
+            --secondary: #77216F;
+            --accent: #0E8420;
+            
+            --neutral-900: #1a1a1a;
+            --neutral-800: #2d2d2d;
+            --neutral-700: #4a4a4a;
+            --neutral-600: #6b6b6b;
+            --neutral-500: #8c8c8c;
+            --neutral-400: #adadad;
+            --neutral-300: #d4d4d4;
+            --neutral-200: #e5e5e5;
+            --neutral-100: #f5f5f5;
+            --neutral-50: #fafafa;
+            
+            --success: #0E8420;
+            --warning: #F99B11;
+            --error: #C7162B;
+            --info: #0073E6;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            --font-sans: 'Ubuntu', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Ubuntu Mono', 'Consolas', 'Monaco', monospace;
+            
+            --radius-sm: 4px;
+            --radius: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #0f172a;
-            background:  linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            border-bottom: 1px solid #1e40af;
-            padding:  3rem 2rem;
-            margin-bottom:  2rem;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
-            border-radius: 12px;
-            position: relative;
-            overflow:  hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width:  200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom:  0.5rem;
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1;
-        }
-
-        . subtitle {
-            font-size:  1.4rem;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 16px;
-            border-radius:  20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .card {
-            background: white;
-            padding: 2.5rem;
-            border:  1px solid #e2e8f0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
-            opacity: 0;
-            transition:  opacity 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow:  0 12px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .card:hover:: before {
-            opacity: 1;
-        }
-
-        h2 {
-            color: #2563eb;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        h3 {
-            color: #0f172a;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            font-weight:  600;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .icon {
-            font-size: 1.8rem;
-            filter: drop-shadow(2px 2px 4px rgba(37, 99, 235, 0.3));
-        }
-
-        .requirements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        . requirement-box {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            padding:  1.8rem;
-            border:  2px solid #e2e8f0;
-            border-left: 5px solid #2563eb;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .requirement-box:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);
-            border-left-color: #1d4ed8;
-        }
-
-        .requirement-box h4 {
-            color: #2563eb;
-            margin-bottom:  1rem;
-            font-weight: 700;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .requirement-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .requirement-list li {
-            padding: 0.6rem 0;
-            padding-left: 1.8rem;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .requirement-list li:before {
-            content:  "✓";
-            position: absolute;
-            left: 0;
-            color: #10b981;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .requirement-list li:hover {
-            color: #2563eb;
-        }
-
-        .code-block {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #10b981;
-            padding: 1.8rem;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            margin:  1.5rem 0;
-            position: relative;
-            border:  2px solid #1e293b;
-            border-radius:  10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .code-block code {
-            display: block;
-            white-space: pre;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            border-radius: 6px;
-            box-shadow:  0 2px 8px rgba(37, 99, 235, 0.4);
-        }
-
-        .copy-btn:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-            box-shadow:  0 4px 12px rgba(37, 99, 235, 0.6);
-        }
-
-        .warning {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left: 5px solid #f59e0b;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
-        }
-
-        .info {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            border-left: 5px solid #2563eb;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
-        }
-
-        .success {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border-left: 5px solid #10b981;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
-        }
-
-        .download-box {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            padding: 3rem 2rem;
-            border-radius: 12px;
-            text-align: center;
-            margin:  2rem 0;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background:  radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 10s ease-in-out infinite;
-        }
-
-        . download-box h3 {
-            color: white;
-            margin-top: 0;
-            border-bottom: none;
-            position: relative;
-            z-index: 1;
-        }
-
-        .download-box p {
-            font-size: 1.15rem;
-            margin:  1rem 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-info {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            padding:  2rem;
-            border:  2px solid #2563eb;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-        }
-
-        .contact-info h4 {
-            color: #2563eb;
-            margin-bottom: 1.2rem;
-            font-size: 1.3rem;
-            font-weight:  700;
-        }
-
-        .contact-info p {
-            margin:  0.8rem 0;
-            font-size: 1.05rem;
-        }
-
-        .contact-info a {
-            color: #2563eb;
-            text-decoration:  none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 2px 4px;
-            border-radius:  4px;
-        }
-
-        .contact-info a:hover {
-            color: #1d4ed8;
-            background: rgba(37, 99, 235, 0.1);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns:  repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            border:  2px solid #1e40af;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card:: before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background:  rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .feature-card:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .feature-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
-        }
-
-        .feature-icon {
-            font-size: 3. 5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
-        }
-
-        .feature-card h3 {
-            color:  white;
-            border:  none;
-            margin:  0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-card p {
-            position: relative;
-            z-index: 1;
-        }
-
-        .services-section {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            border: 2px solid #cbd5e1;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .service-card {
-            background: white;
-            padding:  2rem;
-            border-radius: 10px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow:  hidden;
-        }
-
-        . service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height:  4px;
-            background: linear-gradient(90deg, #2563eb 0%, #10b981 100%);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow:  0 8px 20px rgba(0, 0, 0, 0.1);
-            border-color: #2563eb;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        .service-card h4 {
-            color:  #2563eb;
-            font-size: 1.3rem;
-            margin-bottom:  0.8rem;
-            font-weight: 700;
-        }
-
-        .service-card p {
-            color:  #64748b;
-            line-height: 1.7;
-        }
-
-        .service-status {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight:  600;
-            margin-top: 1rem;
-        }
-
-        .status-active {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #10b981;
-        }
-
-        footer {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            border-top: 3px solid #2563eb;
-            padding: 3rem 2rem;
-            margin-top: 3rem;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 2px 6px;
-            border-radius:  4px;
-        }
-
-        footer a:hover {
-            color: #93c5fd;
-            background:  rgba(96, 165, 250, 0.2);
-        }
-
-        .footer-links {
-            margin:  2rem 0;
-            padding:  1rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-primary {
-            display: inline-block;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            padding: 14px 32px;
-            text-decoration:  none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin:  10px;
-            border:  2px solid #1e40af;
-            border-radius: 8px;
-            box-shadow:  0 4px 12px rgba(37, 99, 235, 0.3);
-            position: relative;
-            overflow:  hidden;
-        }
-
-        . btn-primary:: before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .btn-primary:hover:: before {
-            width: 300px;
-            height: 300px;
-        }
-
-        . btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow:  0 8px 24px rgba(37, 99, 235, 0.5);
-        }
-
-        .btn-primary span {
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-
-            . subtitle {
-                font-size: 1.1rem;
-            }
-
-            .requirements-grid,
-            .features-grid,
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            header {
-                padding: 2rem 1.5rem;
-            }
-        }
-
-        /* Animação de scroll suave */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Efeito de loading */
-        .loading {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        body {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--neutral-800);
+            background: var(--neutral-50);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .loaded {
-            opacity: 1;
-            transform: translateY(0);
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid var(--neutral-200);
+            box-shadow: var(--shadow-sm);
         }
+
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            text-decoration: none;
+            color: var(--neutral-900);
+            font-weight: 500;
+            font-size: 1.125rem;
+        }
+
+        .navbar-version {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--neutral-100);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--neutral-600);
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            list-style: none;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: var(--neutral-700);
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+
+        .navbar-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
+            color: white;
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: var(--spacing-2xl);
+            color: var(--neutral-300);
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 400;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-xl);
+        }
+
+        .section {
+            padding: var(--spacing-3xl) 0;
+        }
+
+        .section-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--neutral-900);
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.01em;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--neutral-600);
+            max-width: 720px;
+        }
+
+        .os-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .os-card {
+            background: white;
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .os-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .os-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .os-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .os-name {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--neutral-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .os-version {
+            font-size: 0.875rem;
+            color: var(--neutral-600);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--neutral-900);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 500;
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        .list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-item {
+            padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-xl);
+            position: relative;
+            color: var(--neutral-700);
+        }
+
+        .list-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .grid {
+            display: grid;
+            gap: var(--spacing-xl);
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .code-container {
+            position: relative;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--neutral-800);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            border: 1px solid var(--neutral-700);
+            border-bottom: none;
+        }
+
+        .code-language {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--neutral-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .copy-button {
+            padding: 0.375rem 0.75rem;
+            background: transparent;
+            border: 1px solid var(--neutral-600);
+            border-radius: var(--radius-sm);
+            color: var(--neutral-300);
+            font-size: 0.875rem;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-button:hover {
+            background: var(--neutral-700);
+            border-color: var(--neutral-500);
+            color: white;
+        }
+
+        .copy-button.copied {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .code-block {
+            background: var(--neutral-900);
+            border: 1px solid var(--neutral-700);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: #A8B9CC;
+            display: block;
+            white-space: pre;
+        }
+
+        .alert {
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin: var(--spacing-lg) 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #E6F3FF;
+            border-color: var(--info);
+            color: #004085;
+        }
+
+        .alert-success {
+            background: #E8F5E9;
+            border-color: var(--success);
+            color: #1B5E20;
+        }
+
+        .alert-warning {
+            background: #FFF3E0;
+            border-color: var(--warning);
+            color: #E65100;
+        }
+
+        .alert-error {
+            background: #FFEBEE;
+            border-color: var(--error);
+            color: #B71C1C;
+        }
+
+        .alert-title {
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .alert-content {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .critical-box {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFE5E5 100%);
+            border: 2px solid var(--error);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            margin: var(--spacing-2xl) 0;
+            box-shadow: 0 4px 20px rgba(199, 22, 43, 0.15);
+        }
+
+        .critical-box .card-title {
+            color: var(--error);
+        }
+
+        .error-example {
+            background: #1a1a1a;
+            color: #ff6b6b;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            margin: var(--spacing-md) 0;
+            border-left: 4px solid var(--error);
+            overflow-x: auto;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        thead {
+            background: var(--neutral-100);
+        }
+
+        th {
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--neutral-700);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        td {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid var(--neutral-200);
+            color: var(--neutral-700);
+        }
+
+        tbody tr:hover {
+            background: var(--neutral-50);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+        }
+
+        .button-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .button-secondary {
+            background: white;
+            color: var(--neutral-700);
+            border: 1px solid var(--neutral-300);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, var(--primary-light) 0%, white 100%);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .contact-box h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-lg);
+            font-weight: 500;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            color: var(--neutral-700);
+        }
+
+        .contact-item strong {
+            min-width: 140px;
+            color: var(--neutral-900);
+        }
+
+        .contact-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: var(--neutral-900);
+            color: var(--neutral-300);
+            padding: var(--spacing-3xl) 0 var(--spacing-xl);
+            margin-top: var(--spacing-3xl);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .footer-section h4 {
+            color: white;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+            font-size: 1.125rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--neutral-400);
+            text-decoration: none;
+            display: block;
+            margin: var(--spacing-sm) 0;
+            font-size: 0.9375rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--neutral-800);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+            color: var(--neutral-500);
+            font-size: 0.875rem;
+        }
+
+        .subsection {
+            margin-top: var(--spacing-xl);
+        }
+
+        .subsection-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--neutral-800);
+            margin-bottom: var(--spacing-md);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .os-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-0 { margin-bottom: 0; }
+        .mb-sm { margin-bottom: var(--spacing-sm); }
+        .mb-md { margin-bottom: var(--spacing-md); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        .mb-xl { margin-bottom: var(--spacing-xl); }
+        .mb-2xl { margin-bottom: var(--spacing-2xl); }
+
+        .mt-0 { margin-top: 0; }
+        .mt-sm { margin-top: var(--spacing-sm); }
+        .mt-md { margin-top: var(--spacing-md); }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mt-xl { margin-top: var(--spacing-xl); }
+        .mt-2xl { margin-top: var(--spacing-2xl); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔐 BSSC</h1>
-            <p class="subtitle">Sistema de Controle Biométrico e Sincronização</p>
-            <div class="badge">✨ v1.0.0 - Enterprise Edition</div>
-        </header>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">
+                <strong>BSSC</strong>
+                <span class="navbar-version">v1.0.0</span>
+            </a>
+            <ul class="navbar-links">
+                <li><a href="#requirements">Requirements</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <div class="card loading">
-            <h2><span class="icon">📋</span> Sobre o Sistema</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 2rem;">O BSSC é um sistema completo de gestão de ponto biométrico com sincronização em tempo real.  Desenvolvido para Ubuntu/Debian, oferece interface gráfica intuitiva e <strong>dois serviços Python independentes</strong> em background para máxima confiabilidade.</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Gestão de Usuários</h3>
-                    <p>Cadastro e sincronização automática com dispositivos biométricos</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🕒</div>
-                    <h3>Ponto Biométrico</h3>
-                    <p>Coleta de registros em tempo real com alta precisão</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Relatórios</h3>
-                    <p>Dashboards interativos e exportação de dados</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Segurança</h3>
-                    <p>Criptografia AES-256 e autenticação robusta</p>
-                </div>
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">Biometric Synchronization Control System</h1>
+            <p class="hero-subtitle">Complete installation guide for Linux systems</p>
+            <div class="hero-badges">
+                <span class="badge">Enterprise Edition</span>
+                <span class="badge">x86_64 Architecture</span>
+                <span class="badge">Linux Compatible</span>
             </div>
+        </div>
+    </section>
 
-            <div class="services-section">
-                <h3 style="text-align: center; font-size: 1.6rem; color: #2563eb; border:  none;">⚙️ Arquitetura de Serviços</h3>
-                <p style="text-align: center; color: #64748b; margin-bottom: 1.5rem;">Dois serviços systemd independentes garantem máxima confiabilidade e performance</p>
-                
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">📥</div>
-                        <h4>bssc-logs</h4>
-                        <p>Serviço de coleta contínua de registros de ponto dos dispositivos biométricos.  Opera em segundo plano com verificação a cada 30 segundos.</p>
-                        <div class="service-status status-active">✓ Serviço Ativo</div>
+    <main>
+        <section class="section" id="supported-os">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Supported Operating Systems</h2>
+                    <p class="section-description">BSSC has been tested and is fully compatible with the following Linux distributions</p>
+                </div>
+
+                <div class="os-grid">
+                    <div class="os-card">
+                        <div class="os-logo">
+                            <img src="Ubuntu.png" alt="Ubuntu Linux">
+                        </div>
+                        <h3 class="os-name">Ubuntu</h3>
+                        <p class="os-version">22.04 LTS / 24.04 LTS</p>
                     </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🔄</div>
-                        <h4>bssc-users</h4>
-                        <p>Serviço de sincronização de usuários com os dispositivos.  Mantém cadastros atualizados automaticamente em todos os equipamentos.</p>
-                        <div class="service-status status-active">✓ Serviço Ativo</div>
+                    <div class="os-card">
+                        <div class="os-logo">
+                            <img src="Debian.png" alt="Debian Linux">
+                        </div>
+                        <h3 class="os-name">Debian</h3>
+                        <p class="os-version">11+ (Bullseye)</p>
+                    </div>
+                    <div class="os-card">
+                        <div class="os-logo">
+                            <img src="mint.jpg" alt="Linux Mint">
+                        </div>
+                        <h3 class="os-name">Linux Mint</h3>
+                        <p class="os-version">21+ (Vanessa)</p>
                     </div>
                 </div>
 
-                <div class="info" style="margin-top: 1.5rem;">
-                    <strong>🔧 Gerenciamento dos Serviços:</strong>
-                    <ul style="margin-top: 0.8rem; padding-left: 2rem; line-height: 1.8;">
-                        <li><code>sudo systemctl status bssc-logs</code> - Verificar status do coletor de logs</li>
-                        <li><code>sudo systemctl status bssc-users</code> - Verificar status do sincronizador</li>
-                        <li><code>sudo journalctl -u bssc-logs -f</code> - Acompanhar logs em tempo real</li>
-                        <li><code>sudo journalctl -u bssc-users -f</code> - Acompanhar sincronização</li>
-                        <li><code>systemctl list-units 'bssc-*'</code> - Listar todos os serviços BSSC</li>
-                    </ul>
+                <div class="alert alert-info">
+                    <div class="alert-title">System Architecture</div>
+                    <div class="alert-content">
+                        BSSC requires a 64-bit x86_64 (AMD64) architecture. ARM and 32-bit systems are not supported.
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="card loading">
-            <h2><span class="icon">📥</span> Como Obter o BSSC</h2>
-            
-            <div class="download-box">
-                <h3>🎯 Obtenha seu Pacote de Instalação</h3>
-                <p>O pacote . deb do BSSC é fornecido exclusivamente pela equipe de desenvolvimento. </p>
-                <p><strong>Entre em contato conosco para solicitar o arquivo de instalação! </strong></p>
-            </div>
-
-            <div class="contact-info">
-                <h4>📞 Contatos da Equipe BSSC</h4>
-                <p><strong>📧 Email Geral:</strong> <a href="mailto:geral@bssc.co.ao">geral@bssc. co.ao</a></p>
-                <p><strong>🔧 Suporte Técnico: </strong> <a href="mailto: benvindo. carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
-                <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
-                <p><strong>🌐 Website:</strong> <a href="https://www.bssc.co.ao">www.bssc.co.ao</a></p>
-                <p><strong>⏰ Horário:</strong> Seg-Sex 8h-17h | Sáb 8h-12h</p>
-            </div>
-
-            <div class="info">
-                <strong>ℹ️ Informações para Solicitação:</strong>
-                <ul style="margin-top: 0.5rem; padding-left: 2rem;">
-                    <li>Nome da empresa/organização</li>
-                    <li>Número de dispositivos a serem gerenciados</li>
-                    <li>Versão do sistema operacional (Ubuntu/Debian)</li>
-                    <li>Finalidade de uso do sistema</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="card loading">
-            <h2><span class="icon">💻</span> Requisitos do Sistema</h2>
-            
-            <div class="requirements-grid">
-                <div class="requirement-box">
-                    <h4>🐧 Sistema Operacional</h4>
-                    <ul class="requirement-list">
-                        <li>Ubuntu 22.04 LTS ou superior</li>
-                        <li>Ubuntu 24.04 LTS (recomendado)</li>
-                        <li>Debian 11 (Bullseye) ou superior</li>
-                        <li>Debian 12 (Bookworm)</li>
-                        <li>Linux Mint 21+</li>
-                        <li>Pop!_OS 22.04+</li>
-                        <li>Outras distros baseadas em Debian/Ubuntu</li>
-                    </ul>
+        <section class="section" id="requirements">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">System Requirements</h2>
                 </div>
 
-                <div class="requirement-box">
-                    <h4>🐍 Python</h4>
-                    <ul class="requirement-list">
-                        <li>Python 3.10 ou superior</li>
-                        <li>python3-pip</li>
-                        <li>systemd (gerenciamento de serviços)</li>
-                    </ul>
-                </div>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3 class="card-title">Hardware</h3>
+                        <ul class="list">
+                            <li class="list-item">Minimum 4GB RAM</li>
+                            <li class="list-item">2GB free disk space</li>
+                            <li class="list-item">x86_64 processor</li>
+                            <li class="list-item">Network connectivity</li>
+                        </ul>
+                    </div>
 
-                <div class="requirement-box">
-                    <h4>🌐 Node.js</h4>
-                    <ul class="requirement-list">
-                        <li>Node.js 18.x LTS (recomendado)</li>
-                        <li>Node.js 20.x ou 24.x</li>
-                        <li>npm 9.x ou superior</li>
-                    </ul>
-                </div>
+                    <div class="card">
+                        <h3 class="card-title">Software</h3>
+                        <ul class="list">
+                            <li class="list-item">Node.js v20.x LTS</li>
+                            <li class="list-item">Python 3.10+</li>
+                            <li class="list-item">PM2 Process Manager</li>
+                            <li class="list-item">System libraries</li>
+                        </ul>
+                    </div>
 
-                <div class="requirement-box">
-                    <h4>💾 Hardware Mínimo</h4>
-                    <ul class="requirement-list">
-                        <li>CPU: 2 cores / 2 GHz</li>
-                        <li>RAM: 4 GB</li>
-                        <li>Disco:  2 GB livres</li>
-                        <li>Rede:  Ethernet ou Wi-Fi</li>
-                    </ul>
-                </div>
-
-                <div class="requirement-box">
-                    <h4>💾 Hardware Recomendado</h4>
-                    <ul class="requirement-list">
-                        <li>CPU: 4+ cores / 2. 5+ GHz</li>
-                        <li>RAM: 8 GB ou mais</li>
-                        <li>Disco: 10 GB livres (SSD)</li>
-                        <li>Rede: Ethernet gigabit</li>
-                    </ul>
-                </div>
-
-                <div class="requirement-box">
-                    <h4>📦 Dependências</h4>
-                    <ul class="requirement-list">
-                        <li>systemd (gerenciamento de serviços)</li>
-                        <li>apt (gerenciador de pacotes)</li>
-                        <li>Desktop environment (GNOME, KDE, XFCE, etc.)</li>
-                    </ul>
+                    <div class="card">
+                        <h3 class="card-title">Network</h3>
+                        <ul class="list">
+                            <li class="list-item">Internet connection</li>
+                            <li class="list-item">Local network access</li>
+                            <li class="list-item">Ports 3000, 3001</li>
+                            <li class="list-item">Firewall configured</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="card loading">
-            <h2><span class="icon">🚀</span> Instalação</h2>
-            
-            <div class="warning">
-                <strong>⚠️ Pré-requisito:</strong> Antes de prosseguir, certifique-se de ter recebido o arquivo <strong>bssc-app_X.Y.Z_amd64.deb</strong> da equipe de desenvolvimento BSSC.
-            </div>
-
-            <h3>1. Pré-requisitos</h3>
-            <p>Primeiro, certifique-se de que o sistema está atualizado:</p>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code>sudo apt update
-sudo apt upgrade -y</code>
-            </div>
-
-            <h3>2. Instalar Python e dependências básicas</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code>sudo apt install -y \
-  python3 \
-  python3-pip \
-  python3-pycryptodome \
-  python3-flask \
-  python3-requests \
-  python3-bcrypt \
-  python3-dotenv</code>
-            </div>
-
-            <div class="info">
-                <strong>ℹ️ Nota:</strong> O instalador . deb instalará automaticamente as dependências Python adicionais que não estão disponíveis via apt.  Os <strong>dois serviços systemd</strong> (bssc-logs e bssc-users) serão configurados e iniciados automaticamente. 
-            </div>
-
-            <h3>3. Instalar o BSSC</h3>
-            <p>Após receber o arquivo .deb da equipe BSSC, navegue até o diretório onde o arquivo foi salvo e execute: </p>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Navegar até o diretório do arquivo (exemplo)
-cd ~/Downloads
-
-# Instalar o pacote fornecido pela equipe BSSC
-sudo dpkg -i bssc-app_X.Y.Z_amd64.deb
-
-# Se houver erros de dependências, corrija com:
-sudo apt --fix-broken install -y</code>
-            </div>
-
-            <div class="warning">
-                <strong>⚠️ Possível Erro de Sandbox:</strong>
-                <p style="margin-top: 0.5rem;">Se aparecer este erro: </p>
-                <code style="display: block; background: #1e293b; color: #ef4444; padding: 0.5rem; margin: 0. 5rem 0; border-radius: 4px;">
-FATAL: setuid_sandbox_host. cc(158)] The SUID sandbox helper binary was found, but is not configured correctly
-                </code>
-                <p style="margin-top: 0.5rem;"><strong>Solução:</strong> Execute os comandos abaixo: </p>
-                <div class="code-block" style="margin-top: 0.5rem;">
-                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                    <code>sudo chown root:root /opt/BSSC/chrome-sandbox
-sudo chmod 4755 /opt/BSSC/chrome-sandbox</code>
+        <section class="section" id="installation">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Installation Guide</h2>
+                    <p class="section-description">Follow these steps carefully to ensure a successful installation</p>
                 </div>
-            </div>
 
-            <h3>4. Verificar instalação e serviços</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Verificar se o comando está disponível
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">1</span>
+                        Install Node.js v20.x LTS
+                    </h3>
+                    <p class="mb-lg">Node.js is required to run the BSSC backend. Install the latest LTS version:</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+node --version
+npm --version</code></div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <div class="alert-title">Verification</div>
+                        <div class="alert-content">The commands above should display <code>v20.x.x</code> for Node.js and <code>10.x.x</code> for npm.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">2</span>
+                        Install System Libraries
+                    </h3>
+                    <p class="mb-lg">Install the required libraries for Chromium (used internally by Electron):</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>sudo apt update
+sudo apt install -y ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libwayland-client0 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils libu2f-udev libvulkan1</code></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">3</span>
+                        Install Python Dependencies
+                    </h3>
+                    <p class="mb-lg">BSSC uses Python for synchronization services with ZKTeco biometric devices:</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>sudo apt install -y python3-pip python3-pycryptodome python3-flask python3-requests
+pip install pyzk --break-system-packages</code></div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <div class="alert-title">Note</div>
+                        <div class="alert-content">The <code>--break-system-packages</code> flag is required on Ubuntu 23.04+ to install Python packages globally.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">4</span>
+                        Install PM2 Process Manager
+                    </h3>
+                    <p class="mb-lg">PM2 manages backend processes and ensures the system restarts automatically after boot:</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>sudo npm install -g pm2
+pm2 startup systemd
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER --hp $HOME
+pm2 --version</code></div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <div class="alert-title">Important</div>
+                        <div class="alert-content">Execute the command shown by PM2 after <code>pm2 startup systemd</code> to enable autostart.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">5</span>
+                        Install BSSC Package
+                    </h3>
+
+                    <div class="alert alert-warning mb-lg">
+                        <div class="alert-title">Attention</div>
+                        <div class="alert-content">Contact the BSSC team to obtain the <code>bssc-app_1.0.0_amd64.deb</code> installation file before proceeding.</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Installing the .deb Package</h4>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>cd ~/Downloads
+sudo dpkg -i bssc-app_1.0.0_amd64.deb
+sudo apt install -f</code></div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Verifying Installation</h4>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>ls -la /opt/BSSC/
 which bssc
+bssc --version</code></div>
+                        </div>
+                    </div>
 
-# Verificar AMBOS os serviços Python
-sudo systemctl status bssc-logs
+                    <div class="alert alert-info mt-lg">
+                        <div class="alert-title">Installation Structure</div>
+                        <div class="alert-content">
+                            <ul class="list mt-md">
+                                <li class="list-item"><code>/opt/BSSC/bssc</code> - Main executable</li>
+                                <li class="list-item"><code>/opt/BSSC/resources/app/</code> - Electron application</li>
+                                <li class="list-item"><code>/opt/BSSC/resources/backend/</code> - NestJS API</li>
+                                <li class="list-item"><code>/opt/BSSC/resources/python-service/</code> - Python services</li>
+                                <li class="list-item"><code>/opt/BSSC/chrome-sandbox</code> - Chromium sandbox</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="critical-box">
+                    <h3 class="card-title">
+                        <span class="step-number">6</span>
+                        MANDATORY Sandbox Configuration
+                    </h3>
+
+                    <div class="alert alert-error mb-lg">
+                        <div class="alert-title">CRITICAL STEP - REQUIRED</div>
+                        <div class="alert-content">
+                            <strong>You MUST execute the commands below BEFORE starting the application for the first time.</strong> Otherwise, BSSC will not start and will display the error shown below.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Error You Will See if You Skip This Step</h4>
+                        <div class="error-example">FATAL: setuid_sandbox_host.cc(158)] The SUID sandbox helper binary
+was found, but is not configured correctly. Rather than run without
+sandboxing I'm aborting now.</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Solution (EXECUTE NOW)</h4>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>sudo chown root:root /opt/BSSC/chrome-sandbox
+sudo chmod 4755 /opt/BSSC/chrome-sandbox
+ls -la /opt/BSSC/chrome-sandbox</code></div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success mt-lg">
+                        <div class="alert-title">Correct Permissions Verification</div>
+                        <div class="alert-content">
+                            <p>The last command should display:</p>
+                            <div class="error-example" style="color: #A8B9CC; border-color: var(--success); margin-top: 0.5rem;">-rwsr-xr-x 1 root root [size] [date] /opt/BSSC/chrome-sandbox</div>
+                            <p class="mt-md">The <strong>'s'</strong> in place of 'x' (rw<strong>s</strong>r-xr-x) indicates that the SUID bit is correctly activated.</p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning mt-lg">
+                        <div class="alert-title">Important</div>
+                        <div class="alert-content">This step is necessary every time you reinstall or update BSSC. Permissions must be reconfigured after each installation.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">7</span>
+                        Starting the System
+                    </h3>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Start Main Application</h4>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>bssc</code></div>
+                        </div>
+
+                        <p class="mt-md mb-md">Or run directly:</p>
+
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>/opt/BSSC/bssc</code></div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Verify Python Services Status</h4>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>sudo systemctl status bssc-logs
 sudo systemctl status bssc-users
-
-# Listar todos os serviços BSSC
-systemctl list-units 'bssc-*'
-
-# Ver logs em tempo real (2 serviços)
 sudo journalctl -u bssc-logs -f
-sudo journalctl -u bssc-users -f
+sudo journalctl -u bssc-users -f</code></div>
+                        </div>
+                    </div>
 
-# Ver logs de ambos simultaneamente
-sudo journalctl -u 'bssc-*' -f</code>
+                    <div class="table-container mt-lg">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Description</th>
+                                    <th>Port</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>bssc-logs</code></td>
+                                    <td>Collects logs from biometric devices</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td><code>bssc-users</code></td>
+                                    <td>Synchronizes users between devices</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td><code>NestJS Backend</code></td>
+                                    <td>Main system API</td>
+                                    <td>3001</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step-number">8</span>
+                        Complete Installation Verification
+                    </h3>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Validation Checklist</h4>
+                        <ul class="list">
+                            <li class="list-item">Node.js v20.x installed and working</li>
+                            <li class="list-item">Python 3.10+ installed with all dependencies</li>
+                            <li class="list-item">PM2 installed and configured for autostart</li>
+                            <li class="list-item">BSSC package installed in /opt/BSSC/</li>
+                            <li class="list-item"><strong>Sandbox permissions configured (-rwsr-xr-x root:root)</strong></li>
+                            <li class="list-item">bssc-logs service active and running</li>
+                            <li class="list-item">bssc-users service active and running</li>
+                            <li class="list-item">Main application starting without errors</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">Automated Verification Script</h4>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-language">bash</span>
+                                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                            </div>
+                            <div class="code-block"><code>echo "=== BSSC Verification ==="
+echo ""
+echo "Node.js: $(node --version)"
+echo "NPM: $(npm --version)"
+echo "Python: $(python3 --version)"
+echo "PM2: $(pm2 --version)"
+echo ""
+echo "Services:"
+systemctl is-active bssc-logs && echo "✓ bssc-logs: ACTIVE" || echo "✗ bssc-logs: INACTIVE"
+systemctl is-active bssc-users && echo "✓ bssc-users: ACTIVE" || echo "✗ bssc-users: INACTIVE"
+echo ""
+echo "Sandbox permissions:"
+ls -l /opt/BSSC/chrome-sandbox | grep "rwsr-xr-x.*root root" && echo "✓ Sandbox: OK" || echo "✗ Sandbox: INCORRECT"</code></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="success">
-                <strong>✅ Instalação Concluída!</strong> 
-                <p style="margin-top: 0.8rem;">O BSSC está instalado com <strong>2 serviços systemd independentes</strong>:</p>
-                <ul style="margin-top: 0.5rem; padding-left: 2rem;">
-                    <li><strong>bssc-logs: </strong> Coleta registros de ponto (porta 30 segundos)</li>
-                    <li><strong>bssc-users:</strong> Sincroniza usuários com dispositivos</li>
-                </ul>
-                <p style="margin-top:  0.8rem;">Inicie a aplicação com o comando <code>bssc</code> ou procure por "BSSC" no menu de aplicações.</p>
-            </div>
-        </div>
+        <section class="section" id="troubleshooting">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Troubleshooting</h2>
+                    <p class="section-description">Common issues and their solutions</p>
+                </div>
 
-        <div class="card loading">
-            <h2><span class="icon">⚙️</span> Configuração Inicial</h2>
-            
-            <h3>1. Primeira execução</h3>
-            <p>Execute a aplicação pela primeira vez: </p>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code>bssc</code>
-            </div>
-
-            <h3>2. Configurar conexão</h3>
-            <ol style="padding-left: 2rem; margin:  1rem 0; line-height: 1.8;">
-                <li>Na interface gráfica, acesse <strong>Configurações</strong></li>
-                <li>Configure o endereço IP do dispositivo ZKTeco</li>
-                <li>Configure as credenciais de acesso</li>
-                <li>Teste a conexão</li>
-            </ol>
-
-            <h3>3. Verificar serviços de sincronização</h3>
-            <p>Os serviços Python foram instalados e configurados automaticamente.  Verifique o status:</p>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Verificar status dos 2 serviços
-sudo systemctl status bssc-logs
-sudo systemctl status bssc-users
-
-# Ver logs em tempo real
-sudo journalctl -u 'bssc-*' -f
-
-# Reiniciar se necessário
-sudo systemctl restart bssc-logs
-sudo systemctl restart bssc-users</code>
-            </div>
-
-            <div class="info">
-                <strong>ℹ️ Serviços Automáticos:</strong> Ambos os serviços Python foram configurados para iniciar automaticamente no boot do sistema.  Após a primeira execução, você não precisa gerenciá-los manualmente. 
-            </div>
-        </div>
-
-        <div class="card loading">
-            <h2><span class="icon">🔧</span> Comandos Úteis</h2>
-            
-            <h3>Aplicação GUI</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Iniciar aplicação
-bssc
-
-# Ou usar comando alternativo
-bssc-app</code>
-            </div>
-
-            <h3>Gerenciamento dos Serviços Python (2 serviços)</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Status de ambos os serviços
-sudo systemctl status bssc-logs
-sudo systemctl status bssc-users
-
-# Ou status resumido de todos
-systemctl list-units 'bssc-*'
-
-# Iniciar serviços
-sudo systemctl start bssc-logs
-sudo systemctl start bssc-users
-
-# Parar serviços
-sudo systemctl stop bssc-logs
-sudo systemctl stop bssc-users
-
-# Reiniciar serviços
-sudo systemctl restart bssc-logs
-sudo systemctl restart bssc-users
-
-# Habilitar início automático
-sudo systemctl enable bssc-logs
-sudo systemctl enable bssc-users
-
-# Desabilitar início automático
-sudo systemctl disable bssc-logs
-sudo systemctl disable bssc-users
-
-# Ver logs de ambos em tempo real
-sudo journalctl -u 'bssc-*' -f
-
-# Ver logs específicos
-sudo journalctl -u bssc-logs -f
-sudo journalctl -u bssc-users -f
-
-# Ver últimas 50 linhas de log
-sudo journalctl -u bssc-logs -n 50
-sudo journalctl -u bssc-users -n 50
-
-# Ver logs desde hoje
-sudo journalctl -u 'bssc-*' --since today</code>
-            </div>
-
-            <h3>Manutenção</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Ver informações do pacote instalado
-dpkg -l | grep bssc-app
-
-# Ver arquivos instalados
-dpkg -L bssc-app
-
-# Remover aplicação (mantém configurações)
-sudo apt remove bssc-app
-
-# Remover completamente (incluindo configurações)
-sudo apt purge bssc-app
-
-# Limpar arquivos de configuração órfãos
-sudo apt autoremove</code>
-            </div>
-        </div>
-
-        <div class="card loading">
-            <h2><span class="icon">🛠</span> Solução de Problemas</h2>
-            
-            <h3>Problema:  Comando 'bssc' não encontrado</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Atualizar cache do shell
-hash -r
-
-# Verificar se o link existe
+                <div class="card">
+                    <h3 class="card-title">Command bssc not found</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>hash -r
 ls -la /usr/local/bin/bssc
+sudo ln -sf /opt/BSSC/bssc /usr/local/bin/bssc</code></div>
+                    </div>
+                </div>
 
-# Recriar link manualmente se necessário
-sudo ln -sf /opt/BSSC/bssc /usr/local/bin/bssc</code>
-            </div>
-
-            <h3>Problema:  Serviços Python não iniciam</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Ver logs detalhados de AMBOS os serviços
-sudo journalctl -u bssc-logs -n 100 --no-pager
+                <div class="card">
+                    <h3 class="card-title">Python services do not start</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>sudo journalctl -u bssc-logs -n 100 --no-pager
 sudo journalctl -u bssc-users -n 100 --no-pager
-
-# Verificar dependências Python
-python3 -c "from Crypto. Cipher import AES; print('pycryptodome:  OK')"
+python3 -c "from Crypto.Cipher import AES; print('pycryptodome: OK')"
 python3 -c "import flask; print('flask: OK')"
 python3 -c "import zk; print('pyzk: OK')"
-
-# Reinstalar dependências Python
 sudo apt install --reinstall python3-pycryptodome python3-flask
-
-# Verificar configuração dos serviços
-sudo systemctl cat bssc-logs
-sudo systemctl cat bssc-users
-
-# Recarregar configuração
 sudo systemctl daemon-reload
+sudo systemctl restart bssc-logs bssc-users</code></div>
+                    </div>
+                </div>
 
-# Tentar iniciar manualmente
-sudo systemctl start bssc-logs
-sudo systemctl start bssc-users
+                <div class="card">
+                    <h3 class="card-title">One service works but the other doesn't</h3>
+                    <div class="alert alert-info">
+                        <div class="alert-title">Tip</div>
+                        <div class="alert-content">
+                            The services are independent. If one fails, the other continues working.
+                            <ul class="list mt-md">
+                                <li class="list-item"><strong>bssc-logs:</strong> Check if paths exist in <code>/opt/BSSC/resources/python-service/logs-collector/</code></li>
+                                <li class="list-item"><strong>bssc-users:</strong> Check if paths exist in <code>/opt/BSSC/resources/python-service/users-sync/</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-# Ver status detalhado
-systemctl status bssc-logs -l
-systemctl status bssc-users -l</code>
-            </div>
+                <div class="card">
+                    <h3 class="card-title">Application does not connect to ZKTeco device</h3>
+                    <ul class="list">
+                        <li class="list-item">Verify the device is powered on and on the same network</li>
+                        <li class="list-item">Test connectivity: <code>ping DEVICE_IP</code></li>
+                        <li class="list-item">Check firewall: <code>sudo ufw status</code></li>
+                        <li class="list-item">Confirm correct IP and port in BSSC settings</li>
+                        <li class="list-item">Check Python service logs for connection errors</li>
+                    </ul>
+                </div>
 
-            <h3>Problema: Um serviço funciona mas o outro não</h3>
-            <div class="info">
-                <strong>💡 Dica:</strong> Os serviços são independentes.  Se um falhar, o outro continua funcionando.
-                <ul style="margin-top: 0.5rem; padding-left: 2rem;">
-                    <li><strong>bssc-logs: </strong> Verifica se os caminhos dos arquivos Python existem em <code>/opt/BSSC/resources/python-service/logs-collector/</code></li>
-                    <li><strong>bssc-users:</strong> Verifica se os caminhos dos arquivos Python existem em <code>/opt/BSSC/resources/python-service/users-sync/</code></li>
-                </ul>
-            </div>
-
-            <h3>Problema:  Aplicação não conecta ao dispositivo ZKTeco</h3>
-            <ul class="requirement-list" style="margin-left: 2rem;">
-                <li>Verifique se o dispositivo está ligado e na mesma rede</li>
-                <li>Teste a conectividade:  <code>ping IP_DO_DISPOSITIVO</code></li>
-                <li>Verifique o firewall:  <code>sudo ufw status</code></li>
-                <li>Confirme o IP e porta corretos nas configurações da aplicação</li>
-                <li>Verifique os logs dos serviços Python para erros de conexão</li>
-            </ul>
-
-            <h3>Problema: Erro de sandbox do Chrome</h3>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Corrigir permissões do sandbox
+                <div class="card">
+                    <h3 class="card-title">Chrome sandbox error persists</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>ls -la /opt/BSSC/chrome-sandbox
 sudo chown root:root /opt/BSSC/chrome-sandbox
 sudo chmod 4755 /opt/BSSC/chrome-sandbox
+ls -la /opt/BSSC/chrome-sandbox</code></div>
+                    </div>
 
-# Verificar permissões
-ls -la /opt/BSSC/chrome-sandbox
+                    <div class="alert alert-error mt-lg">
+                        <div class="alert-title">If error persists</div>
+                        <div class="alert-content">Ensure the file shows <code>-rwsr-xr-x 1 root root</code>. The 's' must be present.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-# Deve mostrar: -rwsr-xr-x 1 root root</code>
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">System Updates</h2>
+                </div>
+
+                <div class="card">
+                    <p class="mb-lg">To update to a new version, contact the BSSC team to obtain the latest package.</p>
+
+                    <div class="contact-box mb-lg">
+                        <h3>Request Update</h3>
+                        <div class="contact-item">
+                            <strong>Email:</strong>
+                            <a href="mailto:info@bssc.co.ao">info@bssc.co.ao</a>
+                        </div>
+                        <div class="contact-item">
+                            <strong>WhatsApp:</strong>
+                            <a href="https://wa.me/244948474874">+244 948 474 874</a>
+                        </div>
+                    </div>
+
+                    <p class="mb-md">After receiving the new .deb package:</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-language">bash</span>
+                            <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <div class="code-block"><code>sudo dpkg -i bssc-app_X.Y.Z_amd64.deb
+sudo systemctl restart bssc-logs bssc-users
+systemctl status bssc-logs bssc-users</code></div>
+                    </div>
+
+                    <div class="alert alert-warning mt-lg">
+                        <div class="alert-title">IMPORTANT</div>
+                        <div class="alert-content">
+                            <p class="mb-md">After each update, you MUST reconfigure sandbox permissions:</p>
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-language">bash</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <div class="code-block"><code>sudo chown root:root /opt/BSSC/chrome-sandbox
+sudo chmod 4755 /opt/BSSC/chrome-sandbox</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-lg">
+                        <div class="alert-title">Update Note</div>
+                        <div class="alert-content">During the update, both services are automatically stopped and reconfigured. Your settings and data are preserved in <code>~/.config/BSSC/</code>.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="support">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Technical Support</h2>
+                    <p class="section-description">Need help? The BSSC team is available for complete technical support</p>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="contact-box">
+                        <h3>Support Channels</h3>
+                        <div class="contact-item">
+                            <strong>General Email:</strong>
+                            <a href="mailto:info@bssc.co.ao">info@bssc.co.ao</a>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Technical Support:</strong>
+                            <a href="mailto:support@bssc.co.ao">support@bssc.co.ao</a>
+                        </div>
+                        <div class="contact-item">
+                            <strong>WhatsApp:</strong>
+                            <a href="https://wa.me/244948474874">+244 948 474 874</a>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Website:</strong>
+                            <a href="https://www.bssc.co.ao">www.bssc.co.ao</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-box">
+                        <h3>Business Hours</h3>
+                        <div class="contact-item">
+                            <strong>Monday - Friday:</strong>
+                            <span>8:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Saturday:</strong>
+                            <span>8:00 AM - 12:00 PM</span>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Response Time:</strong>
+                            <span>24-48 hours</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-2xl">
+                    <a href="mailto:info@bssc.co.ao" class="button button-primary">Request Installer</a>
+                    <a href="https://wa.me/244948474874" class="button button-primary">WhatsApp Contact</a>
+                    <a href="mailto:support@bssc.co.ao" class="button button-secondary">Technical Support</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>BSSC</h4>
+                    <p>Biometric Synchronization Control System for intelligent time tracking and access management.</p>
+                    <p class="mt-md"><strong>Version 1.0.0 Enterprise</strong></p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="mailto:info@bssc.co.ao">info@bssc.co.ao</a>
+                    <a href="mailto:support@bssc.co.ao">support@bssc.co.ao</a>
+                    <a href="https://wa.me/244948474874">+244 948 474 874</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="https://www.bssc.co.ao">Official Website</a>
+                    <a href="mailto:info@bssc.co.ao">Request Installer</a>
+                    <a href="mailto:support@bssc.co.ao">Open Support Ticket</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 BSSC Development Team. All rights reserved.</p>
+                <p class="mt-sm">Business Hours: Mon-Fri 8AM-5PM | Sat 8AM-12PM</p>
             </div>
         </div>
-
-        <div class="card loading">
-            <h2><span class="icon">🔄</span> Atualização</h2>
-            
-            <p>Para atualizar para uma nova versão, entre em contato com a equipe BSSC para obter o pacote mais recente:</p>
-            
-            <div class="contact-info">
-                <h4>📞 Solicite a Atualização</h4>
-                <p><strong>📧 Email:</strong> <a href="mailto:geral@bssc.co. ao">geral@bssc.co.ao</a></p>
-                <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
-            </div>
-
-            <p>Após receber o novo pacote . deb: </p>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-                <code># Instalar atualização (preserva configurações)
-sudo dpkg -i bssc-app_X.Y.Z_amd64.deb
-
-# Reiniciar AMBOS os serviços
-sudo systemctl restart bssc-logs
-sudo systemctl restart bssc-users
-
-# Verificar status
-systemctl status bssc-logs
-systemctl status bssc-users</code>
-            </div>
-
-            <div class="info">
-                <strong>ℹ️ Nota de Atualização:</strong> Durante a atualização, ambos os serviços são automaticamente parados e reconfigurados. Suas configurações e dados são preservados em <code>~/.config/BSSC/</code>.
-            </div>
-        </div>
-
-        <div class="card loading">
-            <h2><span class="icon">❓</span> Suporte</h2>
-            
-            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">Precisa de ajuda?  A equipe BSSC está disponível para suporte técnico completo:</p>
-            
-            <div class="contact-info" style="margin-top: 1.5rem;">
-                <h4>📞 Canais de Suporte</h4>
-                <p><strong>📧 Email Geral:</strong> <a href="mailto:geral@bssc.co. ao">geral@bssc.co.ao</a></p>
-                <p><strong>🔧 Suporte Técnico:</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">benvindo.carvalho@bssc.co.ao</a></p>
-                <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
-                <p><strong>🌐 Website:</strong> <a href="https://www.bssc.co.ao">www.bssc.co.ao</a></p>
-                <p><strong>⏰ Horário de Atendimento:</strong> Segunda a Sexta, 8h00 às 17h00 | Sábados, 8h00 às 12h00</p>
-            </div>
-
-            <div style="margin-top: 2rem; text-align: center;">
-                <a href="mailto:geral@bssc. co.ao" class="btn-primary"><span>📧 Solicitar Instalador</span></a>
-                <a href="https://wa.me/244948474874" class="btn-primary"><span>💬 WhatsApp</span></a>
-                <a href="mailto:benvindo.carvalho@bssc.co.ao" class="btn-primary"><span>🔧 Suporte Técnico</span></a>
-            </div>
-        </div>
-
-        <footer>
-    <div style="max-width: 1000px; margin: 0 auto;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: left; margin-bottom: 2rem;">
-            <div>
-                <h4 style="color: #2563eb; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">BSSC</h4>
-                <p style="color: #64748b; line-height: 1.7;">Sistema de Controle Biométrico e Sincronização para gestão inteligente de ponto e acesso. </p>
-                <div class="badge" style="margin-top: 1rem; background: #2563eb; color: white;">v1.0.0 Enterprise</div>
-            </div>
-            
-            <div>
-                <h4 style="color: #2563eb; font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700;">Contato</h4>
-                <p style="color: #64748b; margin:  0.5rem 0;"><strong>📧</strong> <a href="mailto:geral@bssc.co.ao">geral@bssc.co.ao</a></p>
-                <p style="color: #64748b; margin: 0.5rem 0;"><strong>🔧</strong> <a href="mailto:benvindo.carvalho@bssc.co.ao">Suporte Técnico</a></p>
-                <p style="color: #64748b; margin: 0.5rem 0;"><strong>💬</strong> <a href="https://wa.me/244948474874">+244 948 474 874</a></p>
-            </div>
-            
-            <div>
-                <h4 style="color: #2563eb; font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700;">Links Rápidos</h4>
-                <p style="margin: 0.5rem 0;"><a href="https://www.bssc.co.ao">Website Oficial</a></p>
-                <p style="margin: 0.5rem 0;"><a href="mailto:geral@bssc. co.ao">Solicitar Instalador</a></p>
-                <p style="margin:  0.5rem 0;"><a href="mailto:benvindo.carvalho@bssc.co.ao">Abrir Ticket de Suporte</a></p>
-            </div>
-        </div>
-        
-        <div style="border-top: 2px solid #e2e8f0; padding-top: 1. 5rem; text-align: center;">
-            <p style="color:  #64748b; font-size: 0.95rem; margin:  0;">
-                © 2025 BSSC Development Team. Todos os direitos reservados.
-            </p>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.5rem;">
-                Horário de Atendimento:  Seg-Sex 8h-17h | Sáb 8h-12h
-            </p>
-        </div>
-    </div>
-</footer>
-    </div>
+    </footer>
 
     <script>
         function copyCode(button) {
-            const codeBlock = button.nextElementSibling;
-            const code = codeBlock.textContent;
+            const codeBlock = button.closest('.code-container').querySelector('.code-block code');
+            const text = codeBlock.textContent;
 
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = button.textContent;
-                button.textContent = '✓ Copiado!';
-                button.style.background = '#10b981';
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
 
                 setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = '#2563eb';
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
                 }, 2000);
             }).catch(err => {
-                console.error('Erro ao copiar:', err);
-                button.textContent = '✗ Erro';
-                button.style.background = '#ef4444';
+                console.error('Copy failed:', err);
+                button.textContent = 'Failed';
                 setTimeout(() => {
-                    button.textContent = 'Copiar';
-                    button.style.background = '#2563eb';
+                    button.textContent = 'Copy';
                 }, 2000);
             });
         }
 
-        // Smooth scroll para links internos
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this. getAttribute('href'));
+                const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target. scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
+                    const offset = 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
-        });
-
-        // Animação de entrada progressiva
-        const observerOptions = {
-            threshold:  0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry. target.classList.add('loaded');
-                    }, index * 100);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observar todos os cards
-        document.querySelectorAll('.card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Efeito de parallax suave no header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            const scrolled = window.pageYOffset;
-            header.style.transform = `translateY(${scrolled * 0.3}px)`;
-            header.style.opacity = 1 - (scrolled / 500);
         });
     </script>
 </body>
